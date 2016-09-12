@@ -1,2 +1,11 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>EOD Stand Down - Reflect	&#38; Grow!</h1>
+<h3>Produced with Express js, pSQL, and Heroku DB</h3>
+
+<section class='display-posts'>
+    {{#each posts}}
+    <div>
+      <p class='single-post'>{{this.title}}, {{this.user_id}} </p>
+      <p>{{this.body}}</p>
+    </div>
+    {{/each}}
+</section>

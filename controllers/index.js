@@ -1,15 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const pg = require('../model/knex_config.js')
 
-// var postModel = require('../model/posts')
+const postModel = require('../model/posts_query.js')
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  pg.select().table('posts')
+  let allPosts = postModel.allPosts()
     .then((rows)=>{
-      res.render('index', {items:rows})
+      res.render('index', {posts:rows})
     })
     .catch((err)=>{
       console.error('Error getting from database!');
