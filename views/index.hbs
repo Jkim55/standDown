@@ -3,8 +3,9 @@
 
 <section class='display-posts'>
     {{#each posts}}
-    <div>
-      <p class='single-post'>{{this.title}}, {{this.user_id}} </p>
+    <div class='single-post'>
+      <h3>{{this.title}}</h3>
+      <p>{{this.user_id}} - {{this.created_at}}</p>
       <p>{{this.body}}</p>
     </div>
     {{/each}}
