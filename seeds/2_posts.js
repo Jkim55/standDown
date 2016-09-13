@@ -6,20 +6,23 @@ exports.seed = function(knex, Promise) {
         // Inserts seed entries
         knex('posts').insert({
           user_id: 1,
-          title: 'My first post',
-          body: 'This is a test post by Ji'
+          wins: 'Figured out MVC',
+          losses: 'Didn\'t get as much work done as projected',
+          learned: 'Don\'t let your reptilian brain rule'
         }),
 
         knex('posts').insert({
           user_id: 1,
-          title: 'My second post',
-          body: 'This is a test post by Ji'
+          wins: 'Figured out routes',
+          losses: 'Being tired from sleep deprivation is undercutting my performance',
+          learned: 'Get more sleep!'
         }),
 
         knex('posts').insert({
           user_id: 2,
-          title: 'Guest Post by Minnie',
-          body: 'A post with words in it!'
+          wins: 'Read encouraging articles',
+          losses: 'Woke up late',
+          learned: 'Don\'t stay up so late watching trash tv'
         })
       ]);
     });

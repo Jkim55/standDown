@@ -12,17 +12,17 @@ a {
 }
 
 .single-post {
-  margin: 25px;
+  margin: 25px 0;
   border: solid 0.5px;
   padding: 10px;
 }
 
-.single-post p:nth-of-type(1) {
-  font-size: 10px;
+.single-post p {
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
-.single-post p:nth-of-type(2) {
+.single-post span {
   color: gray;
-  font-size: 12px;
   font-weight: lighter;
 }

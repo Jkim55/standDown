@@ -5,8 +5,10 @@ exports.up = function(knex, Promise) {
     table.integer('user_id')
       .references('id')
       .inTable('users');
-    table.string('title');
-    table.text('body');
+    // table.string('title');
+    table.text('wins');
+    table.text('losses');
+    table.text('learned');
   })
 }
 

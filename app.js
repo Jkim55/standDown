@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);  // read posts and make comments
 app.use('/users', users); // login create delete users
-// app.use ('/posts', posts);  // create new posts, edit posts, get posts by id, delete posts
+app.use ('/posts', posts);  // create new posts, edit posts, get posts by id, delete posts
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

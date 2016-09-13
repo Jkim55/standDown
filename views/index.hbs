@@ -4,9 +4,10 @@
 <section class='display-posts'>
     {{#each posts}}
     <div class='single-post'>
-      <h3>{{this.title}}</h3>
-      <p>{{this.user_id}} - {{this.created_at}}</p>
-      <p>{{this.body}}</p>
+      <h3>User {{this.user_id}} -  {{this.created_at}}</h3>
+      <p>Wins: <span>{{this.wins}}</span></p>
+      <p>Losses: <span>{{this.losses}}</span></p>
+      <p>Lessons Learned: <span>{{this.learned}}</span>  </p>
     </div>
     {{/each}}
 </section>
