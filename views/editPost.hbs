@@ -1,0 +1,36 @@
+<section class='edit-post'>
+  <h4>Editing Post </h4>
+  <form class="add-post" action="/posts/{{data.id}}/update" method="post">
+
+    <div class="wins">
+      <div>
+        <label for="post-win">Edit Wins</label>
+      </div>
+      <div>
+        <textarea name="wins" rows="8" cols="100">{{data.wins}}</textarea>
+      </div>
+    </div>
+
+    <div class="losses">
+      <div>
+        <label for="post-losses">Edit Losses</label>
+      </div>
+      <div>
+        <textarea name="losses" rows="8" cols="100">{{data.losses}}</textarea>
+      </div>
+    </div>
+
+    <div class="learned">
+      <div>
+        <label for="post-learned">Edit Lessons Learned</label>
+      </div>
+      <div>
+        <textarea name="learned" rows="8" cols="100">{{data.learned}}</textarea>
+      </div>
+    </div>
+
+    <div>
+      <input type="submit">
+    </div>
+  </form>
+</section>

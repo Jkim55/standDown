@@ -1,0 +1,43 @@
+<button type="button" name="button"><a href="/posts/new">Create a New Post</a></button>
+<section class='display-posts'>
+    <div class='single-post'>
+      <h3>{{post.user_name}} - {{post.created_at}}</h3>
+      <p>Wins: <span>{{post.wins}}</span></p>
+      <p>Losses: <span>{{post.losses}}</span></p>
+      <p>Lessons Learned: <span>{{post.learned}}</span></p>
+      <!-- if logic -->
+      <button type="button" name="button"><a href="/posts/{{post.postID}}/delete">Delete this Post</a></button>
+      <button type="button" name="button"><a href="/posts/{{post.postID}}/update">Update this Post</a></button>
+      <!-- / if logic -->
+    </div>
+</section>
+
+<section class="read-comments">
+  <h4>COMMENTS</h4>
+  {{#each comments}}
+    <div class="single-comment">
+      <p>{{this.body}}</p>
+      <p>{{this.userName}} - {{this.created_at}}</p>
+      {{else}}
+      <p class="empty">No comments</p>
+    </div>
+  {{/each}}
+</section>
+
+<section class="add-comments">
+  <form class="make-comment" action="/" method="post"> <!-- how to link to the post_id & where does action go? -->
+    <div class="post-comment">
+      <div>
+        <label for="comment">Add a comment</label>
+      </div>
+      <div>
+        <textarea name="body" rows="8" cols="100"></textarea>
+      </div>
+      <div>
+        <input type="submit">
+      </div>
+    </div>
+  </form>
+</section>
+
+<!-- no refactoring until functionality is complete  !!! DON"T REFACTOR YET!!!! - Ash -->

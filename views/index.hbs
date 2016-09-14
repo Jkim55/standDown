@@ -1,13 +1,13 @@
-<h1>EOD Stand Down - Reflect	&#38; Grow!</h1>
-<h3>Produced with Express js, pSQL, and Heroku DB</h3>
+<button type="button" name="button"><a href="/posts/new">Create a New Post</a></button>
 
 <section class='display-posts'>
     {{#each posts}}
     <div class='single-post'>
-      <h3>User {{this.user_id}} -  {{this.created_at}}</h3>
+      <h3>{{this.user_name}} -  {{this.created_at}}</h3>
       <p>Wins: <span>{{this.wins}}</span></p>
       <p>Losses: <span>{{this.losses}}</span></p>
-      <p>Lessons Learned: <span>{{this.learned}}</span>  </p>
+      <p>Lessons Learned: <span>{{this.learned}}</span></p>
+      <a href="/posts/{{this.postID}}">Read Full Post with Comments</a>
     </div>
     {{/each}}
 </section>

@@ -1,42 +1,65 @@
-var knex = require('./knex_config')
+const knex = require('./knex_config')
 
-function Posts(){            // this retrieves all posts
+function getAllPosts() {
   return knex('posts')
+    .leftJoin('users', 'users.id', 'posts.user_id') //ljoin to view wo login
+    .select(
+      'users.id as userId',
+      'users.user_name',
+      'posts.id as postID',
+      'posts.created_at',
+      'posts.wins',
+      'posts.losses',
+      'posts.learned'
+    )
 }
 
-function getPostsByID (id) {
-  return Posts().where('id',id)
+function getPostByID (id) {
+  return knex('posts')
+    .leftJoin('users', 'users.id', 'posts.user_id') //ljoin to view wo login
+    .select(
+      'users.id as userId',
+      'users.user_name',
+      'posts.id as postID',
+      'posts.created_at',
+      'posts.wins',
+      'posts.losses',
+      'posts.learned'
+    )
+    .where('posts.id', id).first()
 }
 
-function insertNewPost(author_id, title, body) {
-  return Posts().insert({
-    author_id: author_id,
-    title: title,
-    body: body,
-  })
+function insertNewPost(postContent) {
+  return knex('posts')
+    .insert(postContent)
 }
 
-function updatePost(id, title, body){
-  return Posts(id)
-    .where('id', id)
+function retrievePost(postID){
+  return knex('posts')
+    .where('id', postID)
+}
+
+function updatePost(postID, postContent){
+  return knex('posts')
+    .where('id', postID)
     .update({
-      title: title,
-      body: body
+      wins: postContent.wins,
+      losses: postContent.losses,
+      learned: postContent.learned
     })
 }
 
-function deletePost(name){
-  return Posts()
-    .where('name', name)
+function deletePost(id){
+  return knex('posts')
+    .where('id', id)
     .del()
 }
 
 module.exports = {
-  allPosts: Posts,
-  getStudentByName: function (name) {
-    return Posts().where('name',name)
-  },  // can write it in here or outside as above. ie this could be getStudentByName: getStudentByName
+  getAllPosts: getAllPosts,
+  getPostByID: getPostByID,
   insertNewPost: insertNewPost,
+  retrievePost: retrievePost,
   updatePost: updatePost,
   deletePost: deletePost
 }

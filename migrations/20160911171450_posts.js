@@ -3,9 +3,8 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.integer('user_id')
-      .references('id')
-      .inTable('users');
-    // table.string('title');
+      .references('users.id')
+      .onDelete('CASCADE');
     table.text('wins');
     table.text('losses');
     table.text('learned');
@@ -13,5 +12,5 @@ exports.up = function(knex, Promise) {
 }
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('posts')
+  return knex.schema.dropTableIfExists('posts')
 }
