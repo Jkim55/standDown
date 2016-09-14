@@ -1,0 +1,24 @@
+<h1>EOD Stand Down - Reflect	&#38; Grow!</h1>
+<h3>Produced with Express js, pSQL, and Heroku DB</h3>
+
+<button type="button" name="button"><a href="/posts/new">Create a New Post</a></button>
+<section class='display-posts'>
+    <div class='single-post'>
+      <h3>User {{data.user_id}} -  {{data.created_at}}</h3>
+      <p>Wins: <span>{{data.wins}}</span></p>
+      <p>Losses: <span>{{data.losses}}</span></p>
+      <p>Lessons Learned: <span>{{data.learned}}</span></p>
+      <!-- if logic -->
+      <button type="button" name="button"><a href="/posts/{{data.id}}/delete">Delete this Post</a></button>
+      <button type="button" name="button"><a href="/posts/{{data.id}}/update">Update this Post</a></button>
+      <!-- / if logic -->
+    </div>
+</section>
+
+<section class = "comments">
+<!-- loop for comments -->
+<!-- if logged in -->
+
+</section>
+
+<!-- no refactoring until functionality is complete  !!! DON"T REFACTOR YET!!!! - Ash -->

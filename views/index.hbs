@@ -1,13 +1,24 @@
-<h1>EOD Stand Down - Reflect	&#38; Grow!</h1>
+<h1>EOD Stand Down - Reflect &#38; Grow!</h1>
 <h3>Produced with Express js, pSQL, and Heroku DB</h3>
+
+<button type="button" name="button"><a href="/posts/new">Create a New Post</a></button>
 
 <section class='display-posts'>
     {{#each posts}}
     <div class='single-post'>
-      <h3>User {{this.user_id}} -  {{this.created_at}}</h3>
+      <h3><a href="/posts/{{this.id}}">User {{this.user_id}} -  {{this.created_at}}</a></h3>
       <p>Wins: <span>{{this.wins}}</span></p>
       <p>Losses: <span>{{this.losses}}</span></p>
-      <p>Lessons Learned: <span>{{this.learned}}</span>  </p>
+      <p>Lessons Learned: <span>{{this.learned}}</span></p>
+      <a href="/posts/{{this.id}}">Read Full Post with Comments</a>
+
+      <div class="loggedinOptions">
+        <!-- put this in an if block -->
+        <button type="button" name="button"><a href="/posts/{{this.id}}/delete">Delete this Post</a></button>
+        <button type="button" name="button"><a href="/posts/{{this.id}}/update">Update this Post</a></button>
+        <!-- / put this in an if block -->
+      </div>
+
     </div>
     {{/each}}
 </section>
