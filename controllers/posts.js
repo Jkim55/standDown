@@ -57,7 +57,6 @@ router.post('/:id/update', (req, res, next) => {
   })
 })
 
-
 router.get('/:id/delete', (req, res, next) => {
   postQuery.deletePost(req.params.id)
   .then(() => {
