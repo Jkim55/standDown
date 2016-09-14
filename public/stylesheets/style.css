@@ -29,7 +29,12 @@ a {
   font-weight: lighter;
 }
 
-.single-post h3 > a {
-  color: black;
-  font-size: 16px;
+.single-post a {
+  /*why doesn't this work??*/
+  margin-top: 20px;
+  color:red
+}
+
+.loggedinOptions button{
+  margin: 5px 0 5px 0;
 }

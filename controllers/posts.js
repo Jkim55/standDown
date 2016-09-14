@@ -4,16 +4,16 @@ const express = require('express');
 const router = express.Router();
 const postQuery = require('../model/posts_query.js')
 
-/* GET users listing. */
+/* REDIRECTS '/posts' to '/'. */
 router.get('/', (req, res, next) => {
-  res.redirect('/');
+  res.redirect('/')
 })
 
 router.get('/new',  (req, res, next) => {
-  res.render('posts')
+  res.render('createPost')
 })
 
-router.post('/new', (req, res, next) => {  // create a new post
+router.post('/new', (req, res, next) => {
   postQuery.insertNewPost(req.body)
   .then(() => {
     res.redirect('/')
@@ -36,17 +36,29 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.get('/:id/update', (req, res, next) => {   // update a post
-  postQuery.updatePost(req.params.id)
-  .then(() => {
-    res.redirect('/')
+  postQuery.retrievePost(req.params.id)
+  .then((data) => {
+    res.render('editPost', {data:data[0]})
   })
   .catch((err) => {
-    console.error('Error caught in deleting post from DB');
+    console.error('Error caught in updating post from DB');
     next(err)
   })
 })
 
-router.get('/:id/delete', (req, res, next) => {  // delete a post
+router.post('/:id/update', (req, res, next) => {
+  postQuery.updatePost(req.params.id, req.body)
+  .then(() => {
+    res.redirect('/posts/' + req.params.id)
+  })
+  .catch((err) => {
+    console.error('Error caught in updating post from DB');
+    next(err)
+  })
+})
+
+
+router.get('/:id/delete', (req, res, next) => {
   postQuery.deletePost(req.params.id)
   .then(() => {
     res.redirect('/')

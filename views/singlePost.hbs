@@ -15,10 +15,28 @@
     </div>
 </section>
 
-<section class = "comments">
-<!-- loop for comments -->
-<!-- if logged in -->
+<section class="read-comments">
+  {{#each comment}}
+    <p>{{this}}</p>
+  {{else}}
+    <p class="empty">No comments</p>
+  {{/each}}
+</section>
 
+<section class="add-comments">
+  <form class="make-comment" action="/" method="post"> <!-- how to link to the post_id & where does action go? -->
+    <div class="post-comment">
+      <div>
+        <label for="comment">Add a comment</label>
+      </div>
+      <div>
+        <textarea name="body" rows="8" cols="100"></textarea>
+      </div>
+      <div>
+        <input type="submit">
+      </div>
+    </div>
+  </form>
 </section>
 
 <!-- no refactoring until functionality is complete  !!! DON"T REFACTOR YET!!!! - Ash -->

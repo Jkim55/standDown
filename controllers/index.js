@@ -9,8 +9,8 @@ const postQuery = require('../model/posts_query.js')
 /* GET home page. */
 router.get('/', function(req, res, next) {
   postQuery.allPosts()
-    .then((rows)=>{
-      res.render('index', {posts:rows})
+    .then((posts)=>{
+      res.render('index', {posts:posts})
     })
     .catch((err)=>{
       console.error('Error getting from database!');
