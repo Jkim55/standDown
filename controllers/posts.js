@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const postQuery = require('../model/posts_query.js')
+const commentQuery = require('../model/comments_query.js')
 
 /* REDIRECTS '/posts' to '/'. */
 router.get('/', (req, res, next) => {
@@ -25,9 +26,17 @@ router.post('/new', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  postQuery.getPostsByID(req.params.id)
+  let post = postQuery.getPostByID(req.params.id)
+  let comments = commentQuery.getAllComments(req.params.id)
+  Promise.all([post,comments])
     .then((data) => {
-      res.render('singlePost', {data:data[0]})
+      let post = data[0]
+      let comments = data[1]
+      console.log('comments', comments);
+      res.render('singlePost', {
+        post: post,
+        comments: comments
+      })
     })
     .catch((err) => {
       console.error('Error caught in retrieving post from DB');

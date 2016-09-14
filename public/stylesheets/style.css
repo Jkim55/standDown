@@ -9,13 +9,23 @@ a {
   text-decoration: none
 }
 
+.header a {
+  color: black;
+  font-size: 28px;
+  text-decoration: none;
+}
+
+.header a:hover, .single-post a:hover {
+  color: red;
+}
+
 .display-posts {
   margin: 50px 0px;
 }
 
 .single-post {
   margin: 25px 0;
-  border: solid 0.5px;
+  border: 0.5px solid;
   padding: 10px;
 }
 
@@ -32,9 +42,28 @@ a {
 .single-post a {
   /*why doesn't this work??*/
   margin-top: 20px;
-  color:red
+  color:orange
 }
 
-.loggedinOptions button{
+.loggedinOptions button {
   margin: 5px 0 5px 0;
+}
+
+.read-comments {
+  margin:10px 0 35px 0
+}
+
+.read-comments h4 {
+  font-weight: 400;
+  margin:10px 0
+}
+
+.single-comment p:first-child {
+  font-size: 12px;
+  margin: 3px 0px
+}
+.single-comment p:nth-child(2) {
+  font-size: 10px;
+  color: gray;
+  margin: 3px 0px
 }

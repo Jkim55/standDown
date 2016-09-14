@@ -8,7 +8,7 @@ const postQuery = require('../model/posts_query.js')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  postQuery.allPosts()
+  postQuery.getAllPosts()
     .then((posts)=>{
       res.render('index', {posts:posts})
     })

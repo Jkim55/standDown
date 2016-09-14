@@ -1,13 +1,8 @@
-var knex = require('./knex_config')
+const knex = require('./knex_config')
 
-// function allPosts() {
-//   return knex('posts')
-// }
-
-// Use this for allPosts() after user authentication is complete
-function allPosts() {
+function getAllPosts() {
   return knex('posts')
-    .join('users', 'users.id', 'posts.user_id')
+    .leftJoin('users', 'users.id', 'posts.user_id') //ljoin to view wo login
     .select(
       'users.id as userId',
       'users.user_name',
@@ -19,9 +14,19 @@ function allPosts() {
     )
 }
 
-function getPostsByID (id) {
+function getPostByID (id) {
   return knex('posts')
-    .where('id', id)
+    .leftJoin('users', 'users.id', 'posts.user_id') //ljoin to view wo login
+    .select(
+      'users.id as userId',
+      'users.user_name',
+      'posts.id as postID',
+      'posts.created_at',
+      'posts.wins',
+      'posts.losses',
+      'posts.learned'
+    )
+    .where('posts.id', id).first()
 }
 
 function insertNewPost(postContent) {
@@ -51,8 +56,8 @@ function deletePost(id){
 }
 
 module.exports = {
-  allPosts: allPosts,
-  getPostsByID: getPostsByID,
+  getAllPosts: getAllPosts,
+  getPostByID: getPostByID,
   insertNewPost: insertNewPost,
   retrievePost: retrievePost,
   updatePost: updatePost,
