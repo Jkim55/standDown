@@ -2,8 +2,8 @@
 
 const express = require('express');
 const router = express.Router();
-const postQuery = require('../model/posts_query.js')
-const commentQuery = require('../model/comments_query.js')
+const postQuery = require('../model/posts_query')
+const commentQuery = require('../model/comments_query')
 
 /* REDIRECTS '/posts' to '/'. */
 router.get('/', (req, res, next) => {

@@ -2,8 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-// const pg = require('../model/knex_config.js')
-const postQuery = require('../model/posts_query.js')
+const postQuery = require('../model/posts_query')
 
 
 /* GET home page. */

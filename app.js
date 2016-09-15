@@ -7,7 +7,12 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const routes = require('./controllers/index');
+// Passport's sessions requires express-session to work
+const session = require('express-session');
+const passport = require('./passport'); // Require passport file
+
+
+const index = require('./controllers/index');
 const users = require('./controllers/users');
 const posts = require('./controllers/posts')
 
@@ -23,9 +28,20 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Configure express session
+app.use(session({
+  secret: 'keyboard cat',
+  saveUninitialized: true,
+  resave: false
+}));
+
+app.use(passport.initialize()); // Mount Passport middleware onto Express
+app.use(passport.session());   // Mount Passport session middleware onto Express
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);  // read posts and make comments
+app.use('/', index);  // read posts and make comments
 app.use('/users', users); // login create delete users
 app.use ('/posts', posts);  // create new posts, edit posts, get posts by id, delete posts
 
