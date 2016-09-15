@@ -49,9 +49,9 @@ function updatePost(postID, postContent){
     })
 }
 
-function deletePost(id){
+function deletePost(postID){
   return knex('posts')
-    .where('id', id)
+    .where('id', postID)
     .del()
 }
 
@@ -61,5 +61,5 @@ module.exports = {
   insertNewPost: insertNewPost,
   retrievePost: retrievePost,
   updatePost: updatePost,
-  deletePost: deletePost
+  deletePost: deletePost,
 }

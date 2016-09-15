@@ -58,6 +58,9 @@ a {
   margin:10px 0
 }
 
+.single-comment {
+  margin: 15px 0;
+}
 .single-comment p:first-child {
   font-size: 12px;
   margin: 3px 0px

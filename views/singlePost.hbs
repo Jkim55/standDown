@@ -18,6 +18,7 @@
     <div class="single-comment">
       <p>{{this.body}}</p>
       <p>{{this.userName}} - {{this.created_at}}</p>
+      <button type="button" name="button"><a href="/posts/{{this.postID}}/comment/{{this.id}}/delete">Delete</a></button>
       {{else}}
       <p class="empty">No comments</p>
     </div>
@@ -25,7 +26,7 @@
 </section>
 
 <section class="add-comments">
-  <form class="make-comment" action="/" method="post"> <!-- how to link to the post_id & where does action go? -->
+  <form class="make-comment" action="/posts/{{post.postID}}/comment" method="post"> <!-- how to link to the post_id & where does action go? -->
     <div class="post-comment">
       <div>
         <label for="comment">Add a comment</label>

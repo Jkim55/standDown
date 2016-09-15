@@ -7,17 +7,32 @@ exports.seed = function(knex, Promise) {
         knex('comments').insert({
           post_id: 1,
           commenter_id: 2,
-          body: 'test comment by Minnie'
+          body: 'Werd'
+        }),
+        knex('comments').insert({
+          post_id: 1,
+          commenter_id: 1,
+          body: 'Thanks!'
         }),
         knex('comments').insert({
           post_id: 2,
           commenter_id: 3,
-          body: 'another test comment by Nick'
+          body: 'Get it, girl! 🔥'
+        }),
+        knex('comments').insert({
+          post_id: 2,
+          commenter_id: 3,
+          body: 'Hahah '
         }),
         knex('comments').insert({
           post_id: 3,
           commenter_id: 1,
-          body: 'this comment was made by Ji'
+          body: 'go, minnie! 🐭'
+        }),
+        knex('comments').insert({
+          post_id: 3,
+          commenter_id: 1,
+          body: 'omg so cool'
         }),
       ]);
     });

@@ -77,4 +77,26 @@ router.get('/:id/delete', (req, res, next) => {
   })
 })
 
+router.post('/:id/comment', (req, res, next) => {
+  commentQuery.addComment(req.params.id, req.body)
+  .then(() => {
+    res.redirect('/posts/' + req.params.id)
+  })
+  .catch((err) => {
+    console.error('Error caught in updating post from DB');
+    next(err)
+  })
+})
+
+router.get('/:id/comment/:cID/delete', (req, res, next) => {
+  commentQuery.deleteComment(req.params.cID)
+  .then(() => {
+    res.redirect('/posts/' + req.params.id)
+  })
+  .catch((err) => {
+    console.error('Error caught in updating post from DB');
+    next(err)
+  })
+})
+
 module.exports = router;
