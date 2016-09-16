@@ -6,12 +6,12 @@ const postQuery = require('../model/posts_query')
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   postQuery.getAllPosts()
-    .then((posts)=>{
+    .then((posts) => {
       res.render('index', {posts:posts})
     })
-    .catch((err)=>{
+    .catch((err) => {
       console.error('Error getting from database!');
       next(err)
     })

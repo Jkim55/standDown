@@ -1,23 +1,25 @@
-var passport = require("passport")
-var Local = require("passport-local")
-var users = require("./authUsers")
+'use strict'
 
-passport.use(new Local(function (username, password, done){
-  var verified = users.authenticate(username, password)
+const passport = require("passport")
+const Local = require("passport-local")
+const users = require("./authUsers")
+
+passport.use(new Local((username, password, done) => {
+  let verified = users.authenticate(username, password)
   if (!verified){
     done(null, false)
   }
-  var user = users.find(username)
+  let user = users.find(username)
   done(null, user)
 }))
 
 
-passport.serializeUser(function (user, done){
+passport.serializeUser((user, done) => {
   done(null, user.username)
 })
 
-passport.deserializeUser(function (username, done){
-  var user = users.find(username)
+passport.deserializeUser((username, done) => {
+  let user = users.find(username)
   done(null, user)
 })
 

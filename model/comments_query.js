@@ -1,3 +1,5 @@
+'use strict'
+
 const knex = require('./knex_config')
 
 function getAllComments(userID) {

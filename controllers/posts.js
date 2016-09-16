@@ -32,7 +32,6 @@ router.get('/:id', (req, res, next) => {
     .then((data) => {
       let post = data[0]
       let comments = data[1]
-      console.log('comments', comments);
       res.render('singlePost', {
         post: post,
         comments: comments
