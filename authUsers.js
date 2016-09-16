@@ -18,7 +18,7 @@ function findUser (username){
 }
 
 function authenticateUser (username, password) {
-  var user = findUser(username)
+  var user = findUser (username)
   if (!user) {
     return false
   }
@@ -34,8 +34,7 @@ function addUser (username, password) {
   }
   var user = {
     username: username,
-    // We will not store passwords in plain text
-    passwordHash: hashPassword(password),
+    passwordHash: hashPassword(password),      // passwords are never stored in plain text
   }
   users.push(user)
   return true

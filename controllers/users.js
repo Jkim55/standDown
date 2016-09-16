@@ -1,14 +1,10 @@
-var passport = require('../passport');
-var users = require('../authUsers')
-// users page will allow:
-// login
-// create new user
-// edit user information
-
 'use strict'
 
 const express = require('express');
 const router = express.Router();
+
+const passport = require('../passport');
+const users = require('../authUsers')
 
 /* GET users login */
 router.get('/', function(req, res, next) {
@@ -24,8 +20,26 @@ router.get('/login', function(req, res, next) {
   res.render('login');
 })
 
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/users/dashboard',
+    failureRedirect: '/users/login'
+  })
+);
+
+
 router.get('/register', function(req, res, next) {
   res.render('register');
+})
+
+// added from passport example
+router.post('/register', function (req, res, next) {
+  var success = users.add(req.body.username, req.body.password)   // Add user to data store
+  if (!success) {
+    next(new Error('User could not be created.'));
+    return;
+  }
+  res.redirect('/users/register');  // Send to login page
+
 })
 
 router.get('/dashboard', function (req, res, next) {
