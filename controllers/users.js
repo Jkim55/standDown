@@ -2,9 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt')
 
 const passport = require('../passport');
 const users = require('../authUsers')
+const usersModel = require('../model/users_query')
+
 
 /* GET users login */
 router.get('/', (req, res, next) => {
@@ -26,20 +29,38 @@ router.post('/login', passport.authenticate('local', {
   })
 );
 
-
 router.get('/register', (req, res, next) => {
   res.render('register');
 })
 
 // added from passport example
 router.post('/register', (req, res, next) => {
-  users.add(req.body.username, req.body.password)   // Add user to data store
-    .then (()=>{
-      res.redirect('/users/login');
-    })
-    .catch (() => {
-      new Error('User could not be created.')
-    });
+  if (!req.body.username || !req.body.password || !req.body.email) {
+    res.render('error', {message:"Please fill in all fields"})
+  } else {
+    usersModel.count(req.body.username)
+      .then((num) => {
+        console.log('num is: ', num, 'num.count is: ', num[0].count);
+        if (parseInt(num[0].count) > 0){
+          res.render('error', {message: 'Username is taken.'})
+        } else {
+          let userData = {
+            user_name: req.body.username,
+            password: bcrypt.hashSync(req.body.password, 8),      // passwords are never stored in plain text
+            email: req.body.email
+          }
+          usersModel.add(userData)
+            .then(() =>{
+              res.redirect('/users/login')
+            })
+            .catch((err) => {
+              console.log(err);
+              res.render('error', {message: 'error in inserting user data into database'})
+            })
+        }
+
+      })
+  }
 })
 
 router.get('/dashboard', (req, res, next) => {

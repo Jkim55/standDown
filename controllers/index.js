@@ -2,12 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
-const postQuery = require('../model/posts_query')
+const postModel = require('../model/posts_query')
 
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  postQuery.getAllPosts()
+  postModel.getAllPosts()
     .then((posts) => {
       res.render('index', {posts:posts})
     })
