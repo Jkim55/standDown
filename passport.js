@@ -1,26 +1,49 @@
 'use strict'
-
+const bcrypt = require("bcrypt");
 const passport = require("passport")
 const Local = require("passport-local")
-const users = require("./authUsers")
+
+const userModel = require('./model/users_query')
+
 
 passport.use(new Local((username, password, done) => {
-  let verified = users.authenticate(username, password)
-  if (!verified){
-    done(null, false)
-  }
-  let user = users.find(username)
-  done(null, user)
+  userModel.findUser(username)
+  .then((userData) => {
+    if(userData){
+      bcrypt.compare(password, userData.password,
+      function(err, res){
+        if(res) {
+          done(null, userData)
+        } else {
+          done(null, false)
+        }
+      })
+    }
+    else {
+      done(null, false)
+    }
+  })
+  .catch(function(err){
+    done(err)
+  })
 }))
 
-
-passport.serializeUser((user, done) => {
-  done(null, user.username)
+passport.serializeUser((userData, done) => {
+  done(null, userData.user_name)
 })
 
+// passport.deserializeUser((userData, done) => {
+//   done(null, userData);
+// }) // this deserializeUser() only captures user_name within req.body
+
 passport.deserializeUser((username, done) => {
-  let user = users.find(username)
-  done(null, user)
+  userModel.findUser(username)
+  .then((userData) => {
+    done(null, userData)
+  })
+  .catch(function(err){
+    done(err)
+  })
 })
 
 module.exports = passport

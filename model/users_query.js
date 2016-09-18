@@ -2,20 +2,34 @@
 
 const knex = require('./knex_config')
 
-function addUser(userObj){
-  return knex('users').insert(userObj)
-}
-
-function findUser(userName){
-  return knex('users')
-    .where('user_name', userName)
+function addUser(userData){
+  return knex('users').insert(userData)
 }
 
 function countOfUser(userName){
   return knex('users').count('user_name').where('user_name', userName);
 }
 
-function editUserInfo(){
+function findUser(userName){
+  return knex('users')
+  .where('user_name', userName)
+  .first()
+}
+
+function findUserByID(userID){
+  return knex('users')
+    .where('users.user_name', userID).first()
+}
+
+function changeUserEmail(){
+
+}
+
+function changeUserPassword(){
+
+}
+
+function changeUserName(){
 
 }
 
@@ -25,6 +39,7 @@ function deleteUser(){
 
 module.exports = {
   add: addUser,
-  find: findUser,
-  count: countOfUser
+  count: countOfUser,
+  findUser: findUser,
+  findUserByID: findUserByID,
 }

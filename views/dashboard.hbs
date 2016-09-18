@@ -1,8 +1,11 @@
-<a href="/logout">Logout</a>
+<a href="/users/logout">Logout</a>
 <h1>Your Dashboard</h1>
 
-<p>Welcome {{user.username}}!</p>
-<p>Your password hash is {{user.passwordHash}}.</p>
+<p>Welcome {{userData.user_name}}!</p>
+<p>Your registered email is: {{userData.email}}</p>
+<p>Your password hash is: {{userData.password}}</p>
 
 <a href="/">Read the Blog</a>
+<br>
 <a href="/posts/new">Write A Post</a>
+<br>

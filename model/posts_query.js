@@ -31,9 +31,14 @@ function getPostByID (id) {
     .where('posts.id', id).first()
 }
 
-function insertNewPost(postContent) {
+function insertNewPost(postContent, userID) {
   return knex('posts')
-    .insert(postContent)
+    .insert({
+      user_id: userID,
+      wins: postContent.wins,
+      losses: postContent.losses,
+      learned: postContent.learned
+    })
 }
 
 function retrievePost(postID){

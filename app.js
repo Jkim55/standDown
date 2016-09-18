@@ -38,7 +38,7 @@ app.use(session({
 }));
 
 app.use(passport.initialize()); // Mount Passport middleware onto Express
-app.use(passport.session());   // Mount Passport session middleware onto Express
+app.use(passport.session());    // Mount Passport session middleware onto Express
 
 app.use(express.static(path.join(__dirname, 'public')));
 
