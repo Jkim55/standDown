@@ -14,7 +14,9 @@
       <p>Wins: <span>{{this.wins}}</span></p>
       <p>Losses: <span>{{this.losses}}</span></p>
       <p>Lessons Learned: <span>{{this.learned}}</span></p>
-      <a href="/posts/{{this.postID}}">Read Post with Comments</a>
+      <a href="/posts/{{this.postid}}">
+        Read Post with Comments - [{{this.comment_count}}]
+      </a>
     </div>
     {{/each}}
 </section>
