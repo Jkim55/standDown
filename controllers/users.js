@@ -8,22 +8,28 @@ const passport = require('../passport');
 const userModel = require('../model/users_query')
 
 
-/* GET users login */
+/* GET login page */
 router.get('/', (req, res, next) => {
-  // Don't show login and register to logged in users
-  if (req.isAuthenticated()){
+  if(!req.isAuthenticated()){
+    console.log('Can\'t access route when not logged in');
+    res.redirect('/users/login');
+  } else {
     res.redirect('/users/dashboard');
     return;
   }
-  res.redirect('/users/login')
 });
 
-
+/* GET registration page */
 router.get('/register', (req, res, next) => {
-  res.render('register');
+  if(req.isAuthenticated()){
+    console.log('Can\'t access route when logged in');
+    res.redirect('/users/dashboard');
+  } else {
+    res.render('register');
+  }
 })
 
-// added from passport example
+/* Register a new user */
 router.post('/register', (req, res, next) => {
   if (!req.body.username || !req.body.password || !req.body.email) {
     res.render('error', {message:"Please fill in all fields"})
@@ -51,10 +57,11 @@ router.post('/register', (req, res, next) => {
       })
   }
 })
-
-router.get('/login', (req, res, next) => {
-  res.render('login');
+  router.get('/login', (req, res, next) => {
+    res.render('login');
 })
+
+/* Authenticate the login of a user */
 
 // router.post('/login', (req, res, next) => {
 //   if (!req.body.username || !req.body.password) {
@@ -74,23 +81,23 @@ router.get('/login', (req, res, next) => {
 //   }
 // });
 
+
+/* Authenticate the user from /users/login */
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/users/dashboard',
   failureRedirect: '/users/login'
 }));
 
 router.get('/dashboard', (req, res, next) => {
-  // Determine if the user is authorized to view the page
   if (!req.isAuthenticated()) {
     res.redirect('/users/login');
     return;
   }
-  // req.user will be the value from deserializeUser
   res.render('dashboard', {userData: req.user})
 });
 
+/* Clear the session and unauthenticate the user */
 router.get('/logout', (req, res, next) => {
-  // Clear the session and unauthenticate the user
   req.logout();
   res.redirect('/');
 });

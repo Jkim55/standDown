@@ -12,24 +12,27 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/new',  (req, res, next) => {
-  res.render('createPost')
+  if(!req.isAuthenticated()){
+    console.log('Can\'t access route when not logged in');
+    res.redirect('/users/login');
+  } else {
+    res.render('createPost')
+  }
 })
 
 router.post('/new', (req, res, next) => {
   if(!req.isAuthenticated()){
-    console.log('error!');
+    console.log('Can\'t add a post if not logged in');
     res.redirect('/users/login');
   } else {
-    userModel.findUserByID(req.user)
-      .then((data) =>{
-        console.log('data:', data);
-        console.log('data.user_id:', data.user_id);
-        console.log('req.body:', req.body);
-        let userID = data.user_id
-        // postModel.insertNewPost(req.body, userID)
-        //   .then(() => {
-        //     res.redirect('/')
-        //   })
+    userModel.findUserbyName(req.user.user_name)
+      .then((data) => {
+        let userID = data.id
+        console.log('userID:', userID);
+        postModel.insertNewPost(req.body, userID)
+          .then(() => {
+            res.redirect('/')
+          })
       })
       .catch((err) => {
         console.error('Error caught in inserting into DB');
@@ -56,9 +59,9 @@ router.get('/:id', (req, res, next) => {
     })
 })
 
-router.get('/:id/update', (req, res, next) => {   // update a post
+router.get('/:id/update', (req, res, next) => {
   if(!req.isAuthenticated()){
-    console.log('error!');
+    console.log('Can\'t access route when not logged in');
     res.redirect('/users/login');
   } else {
     postModel.retrievePost(req.params.id)
@@ -106,25 +109,38 @@ router.get('/:id/delete', (req, res, next) => {
 })
 
 router.post('/:id/comment', (req, res, next) => {
-  commentsModel.addComment(req.params.id, req.body)
-  .then(() => {
-    res.redirect('/posts/' + req.params.id)
-  })
-  .catch((err) => {
-    console.error('Error caught in updating post from DB');
-    next(err)
-  })
+  if(!req.isAuthenticated()){
+    console.log('Cannot post comments when not logged in!');
+    res.redirect('/users/login');
+  } else {
+    userModel.findUserbyName(req.user.user_name)
+      .then((userData) => {
+        commentsModel.addComment(req.params.id, userData.id, req.body)
+          .then (() => {
+            res.redirect('/posts/' + req.params.id)
+          })
+      })
+      .catch((err) => {
+        console.error('Error caught in updating post from DB');
+        next(err)
+      })
+  }
 })
 
 router.get('/:id/comment/:cID/delete', (req, res, next) => {
-  commentsModel.deleteComment(req.params.cID)
-  .then(() => {
-    res.redirect('/posts/' + req.params.id)
-  })
-  .catch((err) => {
-    console.error('Error caught in updating post from DB');
-    next(err)
-  })
+  if(!req.isAuthenticated()){
+    console.log('Cannot delete posts when not logged in!');
+    res.redirect('/users/login');
+  } else {
+    commentsModel.deleteComment(req.params.cID)
+      .then(() => {
+        res.redirect('/posts/' + req.params.id)
+      })
+      .catch((err) => {
+        console.error('Error caught in updating post from DB');
+        next(err)
+      })
+  }
 })
 
 module.exports = router;

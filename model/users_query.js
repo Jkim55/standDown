@@ -16,9 +16,9 @@ function findUser(userName){
   .first()
 }
 
-function findUserByID(userID){
+function findUserbyName(userName){
   return knex('users')
-    .where('users.user_name', userID).first()
+    .where('users.user_name', userName).first()
 }
 
 function changeUserEmail(){
@@ -41,5 +41,5 @@ module.exports = {
   add: addUser,
   count: countOfUser,
   findUser: findUser,
-  findUserByID: findUserByID,
+  findUserbyName: findUserbyName,
 }

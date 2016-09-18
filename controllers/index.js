@@ -9,7 +9,7 @@ const postModel = require('../model/posts_query')
 router.get('/', (req, res, next) => {
   postModel.getAllPosts()
     .then((posts) => {
-      res.render('index', {posts:posts})
+      res.render('index', {posts: posts})
     })
     .catch((err) => {
       console.error('Error getting from database!');

@@ -15,11 +15,11 @@ function getAllComments(userID) {
     .where('comments.post_id', userID)
 }
 
-function addComment(postID, comment) {
+function addComment(postID, userID, comment) {
   return knex('comments')
     .insert({
       post_id: postID,
-      // commenter_id: userID,  //capture userID
+      commenter_id: userID,
       body: comment.body,
     })
 }
