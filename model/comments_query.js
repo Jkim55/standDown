@@ -2,9 +2,10 @@
 
 const knex = require('./knex_config')
 
-function getAllComments(userID) {
+
+function getAllComments(userID){
   return knex('comments')
-    .leftJoin('users', 'users.id', 'comments.commenter_id')
+    .join('users', 'users.id', 'comments.commenter_id')
     .select(
       'users.user_name as userName',
       'comments.id',
@@ -15,7 +16,7 @@ function getAllComments(userID) {
     .where('comments.post_id', userID)
 }
 
-function addComment(postID, userID, comment) {
+function addComment(postID, userID, comment){
   return knex('comments')
     .insert({
       post_id: postID,

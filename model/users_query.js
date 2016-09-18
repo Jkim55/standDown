@@ -2,6 +2,7 @@
 
 const knex = require('./knex_config')
 
+
 function addUser(userData){
   return knex('users').insert(userData)
 }

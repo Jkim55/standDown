@@ -2,9 +2,10 @@
 
 const knex = require('./knex_config')
 
-function getAllPosts() {
+
+function getAllPosts(){
   return knex('posts')
-    .leftJoin('users', 'users.id', 'posts.user_id') //ljoin to view wo login
+    .join('users', 'users.id', 'posts.user_id') //leftJoin to view posts w missing id's
     .select(
       'users.id as userId',
       'users.user_name',
@@ -16,9 +17,9 @@ function getAllPosts() {
     )
 }
 
-function getPostByID (id) {
+function getPostByID(id){
   return knex('posts')
-    .leftJoin('users', 'users.id', 'posts.user_id') //ljoin to view wo login
+    .join('users', 'users.id', 'posts.user_id')
     .select(
       'users.id as userId',
       'users.user_name',
@@ -31,7 +32,7 @@ function getPostByID (id) {
     .where('posts.id', id).first()
 }
 
-function insertNewPost(postContent, user_id) {
+function insertNewPost(postContent, user_id){
   return knex('posts')
     .insert({
       user_id: user_id,
