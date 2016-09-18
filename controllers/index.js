@@ -4,12 +4,14 @@ const express = require('express')
 const router = express.Router()
 
 const postModel = require('../model/posts_query')
-
+const commentsModel = require('../model/comments_query')
 
 /* GET index page & render all posts within database  */
 router.get('/', (req, res, next) => {
-  postModel.getAllPosts()
+postModel.getAllPosts()
+
     .then((posts) => {
+
       res.render('index', {posts:posts})
     })
     .catch((err) => {

@@ -48,10 +48,21 @@ router.get('/:id', (req, res, next) => {
   Promise.all([post,comments])
     .then((data) => {
       let post = data[0]
+      let postEditAuthorized
+      if (req.isAuthenticated() && post.user_name === req.user.user_name){
+        postEditAuthorized = true
+      }
       let comments = data[1]
+      let loggedinUser = false
+      if (req.isAuthenticated()){
+        loggedinUser = req.user.user_name
+      }
+
       res.render('singlePost', {
         post: post,
-        comments: comments
+        postEditAuthorized: postEditAuthorized,
+        comments: comments,
+        loggedinUser: loggedinUser
       })
     })
     .catch((err) => {
@@ -72,6 +83,7 @@ router.get('/:id/update', (req, res, next) => {
     res.render('editPost', {data:data[0]})
   })
   .catch((err) => {
+
     console.error('Error caught in updating post from DB')
     next(err)
   })
