@@ -2,6 +2,7 @@
 
 const express = require('express')
 const router = express.Router()
+const moment = require('moment')
 
 const postModel = require('../model/posts_query')
 const userModel = require('../model/users_query')
@@ -31,7 +32,9 @@ router.post('/new', (req, res, next) => {
   userModel.findUserbyName(req.user.user_name)
     .then((data) => {
       let userID = data.id
-      postModel.insertNewPost(req.body, userID)
+      let time = moment().format('MMMM DD, YYYY  │  h:mma')
+      console.log(time);
+      postModel.insertNewPost(req.body, userID, time)
         .then(() => {
           res.redirect('/')
         })
@@ -53,16 +56,16 @@ router.get('/:id', (req, res, next) => {
         postEditAuthorized = true
       }
       let comments = data[1]
-      let loggedinUser = false
+      let loggedInUser = false
       if (req.isAuthenticated()){
-        loggedinUser = req.user.user_name
+        loggedInUser = req.user.user_name
       }
 
       res.render('singlePost', {
         post: post,
         postEditAuthorized: postEditAuthorized,
         comments: comments,
-        loggedinUser: loggedinUser
+        loggedInUser: loggedInUser
       })
     })
     .catch((err) => {
@@ -129,7 +132,8 @@ router.post('/:id/comment', (req, res, next) => {
   }
   userModel.findUserbyName(req.user.user_name)
     .then((userData) => {
-      commentsModel.addComment(req.params.id, userData.id, req.body)
+      let time = moment().format('MMMM DD, YYYY  ・  h:mma')
+      commentsModel.addComment(req.params.id, userData.id, req.body, time)
         .then (() => {
           res.redirect('/posts/' + req.params.id)
         })

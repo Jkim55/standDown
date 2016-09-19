@@ -22,20 +22,33 @@ function findUserbyName(userName){
     .where('users.user_name', userName).first()
 }
 
-function changeUserEmail(){
-
+function editUserName(userID, newUserName){
+  return knex('users')
+    .where('id', userID)
+    .update({
+      user_name: newUserName.user_name
+    })
 }
 
-function changeUserPassword(){
-
+function editUserEmail(userID, newEmail){
+  return knex('users')
+    .where('id', userID)
+    .update({
+      email: newEmail.email
+    })
 }
 
-function changeUserName(){
-
+function editUserPassword(userID, newPassword){
+  return knex('users')
+    .where('id', userID)
+    .update({
+      password: newPassword
+    })
 }
-
-function deleteUser(){
-
+function deleteUser(userID){
+  return knex('users')
+    .where('users.id', userID)
+    .del()
 }
 
 module.exports = {
@@ -43,4 +56,8 @@ module.exports = {
   count: countOfUser,
   findUser: findUser,
   findUserbyName: findUserbyName,
+  editName: editUserName,
+  editEmail:editUserEmail,
+  editPassword: editUserPassword,
+  deleteUser: deleteUser
 }

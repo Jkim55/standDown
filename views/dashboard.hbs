@@ -5,7 +5,23 @@
 <p>Your registered email is: {{userData.email}}</p>
 <p>Your password hash is: {{userData.password}}</p>
 
+<h2>Do Something</h2>
 <a href="/">Read the Blog</a>
 <br>
 <a href="/posts/new">Write A Post</a>
 <br>
+
+<h2>Edit Your Account</h2>
+<a href="/users/update/user_name/{{userData.id}}">Edit Your Username</a>
+
+<br>
+
+<a href="/users/update/email/{{userData.id}}">Edit Your Email</a>
+
+<br>
+
+<a href="/users/update/password/{{userData.id}}">Edit Your Password</a>
+
+<br>
+
+<a href="/users/delete/{{userData.id}}">Delete Your Account</a>

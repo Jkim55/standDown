@@ -93,6 +93,7 @@ router.get('/dashboard', (req, res, next) => {
     res.redirect('/users/login')
     return
   }
+  console.log(req.user);
   res.render('dashboard', {userData: req.user})
 })
 
@@ -105,6 +106,84 @@ router.get('/logout', (req, res, next) => {
   }
   req.logout()
   res.redirect('/')
+})
+
+/* Update Username*/
+router.get('/update/:userInfo/:userID', (req, res, next) => {
+  if (!req.isAuthenticated() || parseInt(req.params.userID) !== req.user.id) {
+    res.render('error', {message: 'Access this route is denied'})
+    return
+  }
+  res.render('editUserInfo', {
+    targetedInfo: req.params.userInfo,
+    userID: req.params.userID
+  })
+})
+
+// router.post('/update/user_name/:userID', (req, res, next) => {
+//   if (!req.isAuthenticated() || parseInt(req.params.userID) !== req.user.id) {
+//     console.log('Cannot access this route when not logged in')
+//     res.render('error', {message: 'Access this route is denied'})
+//     return
+//   }
+//   userModel.editUserName(req.params.userID, req.body)
+//     .then((data)=>{
+//       console.log(data);
+//       req.logout()
+//       res.redirect('/users/login')
+//     })
+// })
+
+router.post('/update/:userInfo/:userID', (req, res, next) => {
+  if (!req.isAuthenticated() || parseInt(req.params.userID) !== req.user.id) {
+    console.log('Cannot access this route when not logged in')
+    res.render('error', {message: 'Access this route is denied'})
+    return
+  }
+  let userInfo = req.params.userInfo
+  switch(userInfo) {
+    case 'user_name':
+      userModel.editName(req.params.userID, req.body)
+        .then((data)=>{
+          req.logout()
+          res.redirect('/users/login')
+        })
+      break
+    case 'email':
+      userModel.editEmail(req.params.userID, req.body)
+        .then((data)=>{
+          res.redirect('/users/dashboard')
+        })
+      break
+    case 'password':
+      let password = bcrypt.hashSync(req.body.password, 8)
+      userModel.editPassword(req.params.userID, password)
+        .then((data)=>{
+          req.logout()
+          res.redirect('/users/login')
+        })
+      break
+  }
+})
+
+
+/* Delete your account */
+router.get('/delete/:userID', (req, res, next) => {
+  if (!req.isAuthenticated() ||  parseInt(req.params.userID) !== req.user.id) {
+    console.log('Access this route is denied.')
+    res.render('error', {message: 'Access this route is denied'})
+    return
+  }
+  userModel.deleteUser(req.params.userID)
+    .then(() => {
+      req.logout()
+      res.redirect('/users/accountclosed')
+    })
+})
+
+/* page rendered after deleting account */
+router.get('/accountclosed', (req, res, next) => {
+  res.render('accountClosed')
 })
 
 module.exports = router

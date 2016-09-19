@@ -1,0 +1,14 @@
+<section>
+  <h4>Account Management</h4>
+  <form class="update-userInfo" action="/users/update/{{targetedInfo}}/{{userID}}" method="post">
+    <div>
+      <label for="user-{{targetedInfo}}">Update Your {{targetedInfo}}</label>
+    </div>
+    <div>
+      <input placeholder="{{targetedInfo}}" name="{{targetedInfo}}">
+    </div>
+    <div>
+      <input type="submit">
+    </div>
+  </form>
+</section>
