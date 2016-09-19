@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 // Configure express session
 app.use(session({
-  secret:  process.env.SESSION_KEY,
+  secret:  process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: false
 }));
