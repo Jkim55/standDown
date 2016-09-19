@@ -14,6 +14,7 @@ function getAllComments(userID){
       'comments.body'
     )
     .where('comments.post_id', userID)
+    .orderBy('comments.created_at', 'asc')
 }
 
 function addComment(postID, userID, comment, time){
