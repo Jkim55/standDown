@@ -11,6 +11,7 @@ const commentsModel = require('../model/comments_query')
 
 /* REDIRECTS '/posts' to '/'. */
 router.get('/', (req, res, next) => {
+  // console.log(req.user.displayName, req.user.emails[0].value);
   res.redirect('/')
 })
 

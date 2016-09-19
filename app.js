@@ -1,57 +1,60 @@
 'use strict'
-require('dotenv').config()
 
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+const express = require('express')
+const path = require('path')
+const favicon = require('serve-favicon')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
 // Passport's sessions requires express-session to work
-const session = require('express-session');
-const passport = require('./passport'); // Require passport file
+const dotenv = require('dotenv').config()
+const session = require('express-session')
+const passport = require('./passport') // Require passport file
+const auth = require('./auth');
 
 
-const index = require('./controllers/index');
-const users = require('./controllers/users');
+const index = require('./controllers/index')
+const users = require('./controllers/users')
 const posts = require('./controllers/posts')
 
-const app = express();
+const app = express()
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'hbs')
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
 
-console.log("session secret is:", process.env.SESSION_SECRET)
 // Configure express session
 app.use(session({
-  secret:  process.env.SESSION_SECRET,
+  secret: process.env.SESSION_KEY,
   saveUninitialized: true,
   resave: false
-}));
+}))
 
-app.use(passport.initialize()); // Mount Passport middleware onto Express
-app.use(passport.session());    // Mount Passport session middleware onto Express
+// app.use(passport.initialize()) // Mount Passport middleware onto Express
+// app.use(passport.session())    // Mount Passport session middleware onto Express
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(auth.passport.initialize());
+app.use(auth.passport.session());
 
-app.use('/', index);  // read posts and make comments
-app.use('/users', users); // login create delete users
-app.use ('/posts', posts);  // create new posts, edit posts, get posts by id, delete posts
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.use('/', index)  // read posts and make comments
+app.use('/users', users) // login create delete users
+app.use ('/posts', posts)  // create new posts, edit posts, get posts by id, delete posts
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  let err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  let err = new Error('Not Found')
+  err.status = 404
+  next(err)
 })
 
 // error handlers
@@ -60,23 +63,23 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
+    res.status(err.status || 500)
     res.render('error', {
       message: err.message,
       error: err
-    });
-  });
+    })
+  })
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
+  res.status(err.status || 500)
   res.render('error', {
     message: err.message,
     error: {}
-  });
-});
+  })
+})
 
 
-module.exports = app;
+module.exports = app
