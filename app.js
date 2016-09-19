@@ -30,10 +30,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-console.log("session secret is:", process.env.SESSION_SECRET)
 // Configure express session
 app.use(session({
-  secret:  process.env.SESSION_SECRET,
+  secret:  process.env.SESSION_KEY,
   saveUninitialized: true,
   resave: false
 }));

@@ -56,16 +56,16 @@ router.get('/:id', (req, res, next) => {
         postEditAuthorized = true
       }
       let comments = data[1]
-      let loggedInUser = false
+      let userLoggedIn
       if (req.isAuthenticated()){
-        loggedInUser = req.user.user_name
+        userLoggedIn = req.user.user_name
       }
 
       res.render('singlePost', {
         post: post,
         postEditAuthorized: postEditAuthorized,
         comments: comments,
-        loggedInUser: loggedInUser
+        userLoggedIn: userLoggedIn
       })
     })
     .catch((err) => {

@@ -1,27 +1,22 @@
 <a href="/users/logout">Logout</a>
-<h1>Your Dashboard</h1>
+<h1>Welcome {{userData.user_name}}!</h1>
 
-<p>Welcome {{userData.user_name}}!</p>
-<p>Your registered email is: {{userData.email}}</p>
-<p>Your password hash is: {{userData.password}}</p>
+<section class='dashboard'>
+  <div>
+    <h3>Do Something</h3>
+    <a href="/">Read the Blog</a>
+    <br>
+    <a href="/posts/new">Write A Post</a>
+  </div>
 
-<h2>Do Something</h2>
-<a href="/">Read the Blog</a>
-<br>
-<a href="/posts/new">Write A Post</a>
-<br>
-
-<h2>Edit Your Account</h2>
-<a href="/users/update/user_name/{{userData.id}}">Edit Your Username</a>
-
-<br>
-
-<a href="/users/update/email/{{userData.id}}">Edit Your Email</a>
-
-<br>
-
-<a href="/users/update/password/{{userData.id}}">Edit Your Password</a>
-
-<br>
-
-<a href="/users/delete/{{userData.id}}">Delete Your Account</a>
+  <div>
+    <h3>Edit Your Account</h3>
+    <a href="/users/update/user_name/{{userData.id}}">Edit Your Username</a>
+    <br>
+    <a href="/users/update/email/{{userData.id}}">Edit Your Email</a>
+    <br>
+    <a href="/users/update/password/{{userData.id}}">Edit Your Password</a>
+    <br>
+    <a href="/users/delete/{{userData.id}}">Delete Your Account</a>
+  </div>
+</section>

@@ -1,9 +1,11 @@
 <div class="user-session">
-  <button type="button" name="button"><a href="/posts/new">Create a New Post</a></button>
-  <!-- if NOT logged in show this link -->
-  <a href="/users">Login</a>
-  <!-- else show this -->
-  <a href="/users/logout">Logout</a>
+  {{#if userLoggedIn}}
+    <button type="button" name="button"><a href="/posts/new">Create a New Post</a></button>
+    <a href="/users/dashboard">Dashboard</a>
+    <a href="/users/logout">Logout</a>
+  {{else}}
+    <a href="/users">Login</a>
+  {{/if}}
 </div>
 
 <section class='display-posts'>
@@ -22,7 +24,7 @@
 
 <section class="read-comments">
   <h4>COMMENTS</h4>
-  <p>loggedInUser:{{{loggedInUser}}}</p>
+  <p>User: {{{userLoggedIn}}}</p>
 
   {{#each comments}}
     <div class="single-comment">

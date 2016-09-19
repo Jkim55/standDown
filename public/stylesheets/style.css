@@ -1,21 +1,35 @@
 body {
   padding: 50px;
   font: 14px Helvetica, Arial, sans-serif;
+  /*background: url(../images/honeycomb.jpeg) no-repeat;
+  background-size:100vw;*/
 }
 
 a {
-  color: orange;
+  color: rgb(109, 26, 26);
   font-size: 10px;
   text-decoration: none
 }
 
-.header a {
+a:hover {
+  color: red;
+}
+
+header {
+  margin-bottom: 25px;
+}
+
+header > a > *{
+  display: inline;
   color: black;
-  font-size: 28px;
   text-decoration: none;
 }
 
-.header a:hover, .single-post a:hover {
+header > a > h1{
+  font-size: 35px;
+}
+
+header:hover, .single-post a:hover {
   color: red;
 }
 
@@ -27,6 +41,7 @@ a {
   margin: 25px 0;
   border: 0.5px solid;
   padding: 10px;
+  /*background-color: rgba(225, 225, 225, .5)*/
 }
 
 .single-post p {
@@ -35,14 +50,14 @@ a {
 }
 
 .single-post span {
-  color: gray;
+  color: rgb(84, 84, 84);
   font-weight: lighter;
 }
 
 .single-post a {
   /*why doesn't this work??*/
   margin-top: 20px;
-  color:orange
+  color:rgb(109, 26, 26)
 }
 
 .loggedinOptions button {
@@ -67,10 +82,10 @@ a {
 }
 .single-comment p:nth-child(2) {
   font-size: 10px;
-  color: gray;
+  color: rgb(84, 84, 84);
   margin: 3px 0px
 }
 
-.user-session {
-  
+.user-session > a {
+  font-weight: bolder;
 }
