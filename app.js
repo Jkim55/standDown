@@ -1,5 +1,4 @@
 'use strict'
-require('dotenv').config()
 
 const express = require('express');
 const path = require('path');
@@ -32,7 +31,7 @@ app.use(cookieParser());
 
 // Configure express session
 app.use(session({
-  secret:  process.env.SESSION_SECRET,
+  secret:  process.env.SECRET,
   saveUninitialized: true,
   resave: false
 }));
