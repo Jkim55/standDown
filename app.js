@@ -1,4 +1,5 @@
 'use strict'
+require('dotenv').config()
 
 const express = require('express');
 const path = require('path');
@@ -8,7 +9,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 // Passport's sessions requires express-session to work
-const dotenv = require('dotenv').config()
 const session = require('express-session');
 const passport = require('./passport'); // Require passport file
 
