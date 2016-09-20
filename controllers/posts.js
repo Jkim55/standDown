@@ -33,7 +33,7 @@ router.post('/new', (req, res, next) => {
     .then((data) => {
       let userID = data.id
       let time = moment().format('MMMM DD, YYYY  │  h:mma')
-      console.log(time);
+      console.log(time)
       postModel.insertNewPost(req.body, userID, time)
         .then(() => {
           res.redirect('/')
@@ -56,10 +56,21 @@ router.get('/:id', (req, res, next) => {
         postEditAuthorized = true
       }
       let comments = data[1]
+
       let userLoggedIn
       if (req.isAuthenticated()){
         userLoggedIn = req.user.user_name
+        for(let i=0; i<comments.length; i++) {
+          console.log('from for loop');
+          if (comments[i].userName === req.user.user_name){
+            comments[i].commentOwner = true
+          } else {
+            comments[i].commentOwner = false
+          }
+        }
       }
+
+      // console.log('below if:',comments);
 
       res.render('singlePost', {
         post: post,

@@ -24,17 +24,15 @@
 
 <section class="read-comments">
   <h4>COMMENTS</h4>
-  <!-- <p>User: {{{userLoggedIn}}}</p> -->
   {{#each comments}}
     <div class="single-comment">
       <p>{{this.body}}</p>
       <p>{{this.userName}} - {{this.created_at}}</p>
 
-      <!-- if conditional here:
-      if this.userName === req.user.user_name render button-->
+        {{#if this.commentOwner}}
         <button type="button" name="button"><a href="/posts/{{this.postID}}/comment/{{this.id}}/delete">Delete</a></button>
-      <!-- end if conditional -->
-
+        {{/if}}
+        
       {{else}}
       <p class="empty">No comments</p>
     </div>
