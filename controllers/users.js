@@ -61,27 +61,6 @@ router.post('/register', (req, res, next) => {
     res.render('login')
 })
 
-/* Authenticate the login of a user */
-
-// router.post('/login', (req, res, next) => {
-//   if (!req.body.username || !req.body.password) {
-//     res.render('error', {message: "Please fill in all fields"})
-//   } else {
-//     userModel.count(req.body.username)
-//     .then((num) => {
-//       if (parseInt(num[0].count) === 0){
-//         res.render('error', {message: 'User is not registered.'})
-//       } else {
-//         passport.authenticate('local', {
-//           successRedirect: '/users/dashboard',
-//           failureRedirect: '/users/login'
-//         })
-//       }
-//     })
-//   }
-// })
-
-
 /* Authenticate the user from /users/login */
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/users/dashboard',
@@ -89,12 +68,13 @@ router.post('/login', passport.authenticate('local', {
 }))
 
 router.get('/dashboard', (req, res, next) => {
+  let userLoggedIn = false
   if (!req.isAuthenticated()) {
     res.redirect('/users/login')
     return
   }
   console.log(req.user);
-  res.render('dashboard', {userData: req.user})
+  res.render('dashboard', {userLoggedIn: req.user})
 })
 
 /* Clear the session and unauthenticate the user */
@@ -110,29 +90,20 @@ router.get('/logout', (req, res, next) => {
 
 /* Update Username*/
 router.get('/update/:userInfo/:userID', (req, res, next) => {
+  let userLoggedIn = false
   if (!req.isAuthenticated() || parseInt(req.params.userID) !== req.user.id) {
     res.render('error', {message: 'Access this route is denied'})
     return
   }
+  if (req.isAuthenticated()){
+    userLoggedIn = req.params.userID
+  }
   res.render('editUserInfo', {
     targetedInfo: req.params.userInfo,
-    userID: req.params.userID
+    userID: req.params.userID,
+    userLoggedIn: userLoggedIn
   })
 })
-
-// router.post('/update/user_name/:userID', (req, res, next) => {
-//   if (!req.isAuthenticated() || parseInt(req.params.userID) !== req.user.id) {
-//     console.log('Cannot access this route when not logged in')
-//     res.render('error', {message: 'Access this route is denied'})
-//     return
-//   }
-//   userModel.editUserName(req.params.userID, req.body)
-//     .then((data)=>{
-//       console.log(data);
-//       req.logout()
-//       res.redirect('/users/login')
-//     })
-// })
 
 router.post('/update/:userInfo/:userID', (req, res, next) => {
   if (!req.isAuthenticated() || parseInt(req.params.userID) !== req.user.id) {

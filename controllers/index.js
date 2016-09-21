@@ -11,8 +11,8 @@ router.get('/', (req, res, next) => {
   postModel.getAllPostsWithCommentCount()
     .then((post) => {
       let userLoggedIn = false
-      if (req.isAuthenticated()){
-        userLoggedIn = true
+      if(req.isAuthenticated()){
+        userLoggedIn = req.user.user_name
       }
       res.render('index', {
         userLoggedIn: userLoggedIn,

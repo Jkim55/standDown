@@ -3,16 +3,26 @@
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/chat-style.css' />
-
   </head>
+
   <body>
     <header>
-      <a href="/">
         <h1>Honeycomb</h1>
         <h2>A Personal Stand Down - Reflect &#38; Grow 🐝 </h2>
-      </a>
+
+        <ul>
+        {{#if userLoggedIn}}
+          <li><a class="active" href="/">Home</a></li>
+          <li><a href="/posts/new">Create A New Post</a></li>
+          <li><a href="/users/dashboard">Dashboard</a></li>
+          <li><a href="/users/logout">Logout</a></li>
+        {{else}}
+          <li><a class="active" href="/">Home</a></li>
+          <li><a href="/users/login">Login</a></li>
+        {{/if}}
+        </ul>
     </header>
+
     {{{body}}}
   </body>
 </html>

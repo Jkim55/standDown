@@ -1,5 +1,5 @@
-<a href="/users/logout">Logout</a>
-<h1>Welcome {{userData.user_name}}!</h1>
+
+<h1>Welcome {{userLoggedIn.user_name}}!</h1>
 
 <section class='dashboard'>
   <div>
@@ -11,12 +11,12 @@
 
   <div>
     <h3>Edit Your Account</h3>
-    <a href="/users/update/user_name/{{userData.id}}">Edit Your Username</a>
+    <a href="/users/update/user_name/{{userLoggedIn.id}}">Edit Your Username</a>
     <br>
-    <a href="/users/update/email/{{userData.id}}">Edit Your Email</a>
+    <a href="/users/update/email/{{userLoggedIn.id}}">Edit Your Email</a>
     <br>
-    <a href="/users/update/password/{{userData.id}}">Edit Your Password</a>
+    <a href="/users/update/password/{{userLoggedIn.id}}">Edit Your Password</a>
     <br>
-    <a href="/users/delete/{{userData.id}}">Delete Your Account</a>
+    <a href="/users/delete/{{userLoggedIn.id}}">Delete Your Account</a>
   </div>
 </section>

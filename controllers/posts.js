@@ -15,12 +15,15 @@ router.get('/', (req, res, next) => {
 
 
 router.get('/new',  (req, res, next) => {
+  let userLoggedIn = false
   if(!req.isAuthenticated()){
     console.log('Can\'t access route when not logged in')
     res.redirect('/users/login')
     return
   }
-  res.render('createPost')
+  res.render('createPost', {
+    userLoggedIn: req.user.user_name
+  })
 })
 
 router.post('/new', (req, res, next) => {
@@ -33,9 +36,6 @@ router.post('/new', (req, res, next) => {
     .then((data) => {
       let userID = data.id
       let time = moment().format('MMMM DD, YYYY  │  h:mma')
-      // let currentUTC = moment()
-      // let offset = -(new Date().getTimezoneOffset());
-      // let currentTimeFormatted = moment.utc(currentUTC).utcOffset(offset).format('MMMM DD, YYYY  │  h:mm a')
       postModel.insertNewPost(req.body, userID, time)
         .then(() => {
           console.log('new time: ', time)
@@ -58,13 +58,13 @@ router.get('/:id', (req, res, next) => {
       if (req.isAuthenticated() && post.user_name === req.user.user_name){
         postEditAuthorized = true
       }
-      let comments = data[1]
-
-      let userLoggedIn
+      let userLoggedIn = false
       if (req.isAuthenticated()){
         userLoggedIn = req.user.user_name
+      }
+      let comments = data[1]
+      if (req.isAuthenticated()){
         for(let i=0; i<comments.length; i++) {
-          console.log('from for loop');
           if (comments[i].userName === req.user.user_name){
             comments[i].commentOwner = true
           } else {
@@ -72,14 +72,11 @@ router.get('/:id', (req, res, next) => {
           }
         }
       }
-
-      // console.log('below if:',comments);
-
       res.render('singlePost', {
         post: post,
         postEditAuthorized: postEditAuthorized,
         comments: comments,
-        userLoggedIn: userLoggedIn
+        userLoggedIn: req.user.user_name
       })
     })
     .catch((err) => {
