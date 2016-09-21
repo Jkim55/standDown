@@ -35,10 +35,10 @@ router.post('/new', (req, res, next) => {
       // let time = moment().format('MMMM DD, YYYY  │  h:mma')
       let currentUTC = moment()
       let offset = -(new Date().getTimezoneOffset());
-      let currentTimeFormatted = moment.utc(time).utcOffset(offset).format('MMMM DD, YYYY  │  h:mm a')
+      let currentTimeFormatted = moment.utc(currentUTC).utcOffset(offset).format('MMMM DD, YYYY  │  h:mm a')
       postModel.insertNewPost(req.body, userID, currentTimeFormatted)
         .then(() => {
-          console.log(time)
+          console.log('new time: ', time)
           res.redirect('/')
         })
     })
