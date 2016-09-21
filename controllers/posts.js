@@ -32,11 +32,11 @@ router.post('/new', (req, res, next) => {
   userModel.findUserbyName(req.user.user_name)
     .then((data) => {
       let userID = data.id
-      // let time = moment().format('MMMM DD, YYYY  │  h:mma')
-      let currentUTC = moment()
-      let offset = -(new Date().getTimezoneOffset());
-      let currentTimeFormatted = moment.utc(currentUTC).utcOffset(offset).format('MMMM DD, YYYY  │  h:mm a')
-      postModel.insertNewPost(req.body, userID, currentTimeFormatted)
+      let time = moment().format('MMMM DD, YYYY  │  h:mma')
+      // let currentUTC = moment()
+      // let offset = -(new Date().getTimezoneOffset());
+      // let currentTimeFormatted = moment.utc(currentUTC).utcOffset(offset).format('MMMM DD, YYYY  │  h:mm a')
+      postModel.insertNewPost(req.body, userID, time)
         .then(() => {
           console.log('new time: ', time)
           res.redirect('/')
