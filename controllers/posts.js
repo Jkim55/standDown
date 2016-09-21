@@ -3,7 +3,6 @@
 const express = require('express')
 const router = express.Router()
 const moment = require('moment')
-
 const postModel = require('../model/posts_query')
 const userModel = require('../model/users_query')
 const commentsModel = require('../model/comments_query')
@@ -13,6 +12,7 @@ const commentsModel = require('../model/comments_query')
 router.get('/', (req, res, next) => {
   res.redirect('/')
 })
+
 
 router.get('/new',  (req, res, next) => {
   if(!req.isAuthenticated()){
@@ -32,10 +32,13 @@ router.post('/new', (req, res, next) => {
   userModel.findUserbyName(req.user.user_name)
     .then((data) => {
       let userID = data.id
-      let time = moment().format('MMMM DD, YYYY  │  h:mma')
-      console.log(time)
-      postModel.insertNewPost(req.body, userID, time)
+      // let time = moment().format('MMMM DD, YYYY  │  h:mma')
+      let currentUTC = moment()
+      let offset = -(new Date().getTimezoneOffset());
+      let currentTimeFormatted = moment.utc(time).utcOffset(offset).format('MMMM DD, YYYY  │  h:mm a')
+      postModel.insertNewPost(req.body, userID, currentTimeFormatted)
         .then(() => {
+          console.log(time)
           res.redirect('/')
         })
     })
