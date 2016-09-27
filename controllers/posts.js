@@ -6,6 +6,7 @@ const moment = require('moment')
 const postModel = require('../model/posts_query')
 const userModel = require('../model/users_query')
 const commentsModel = require('../model/comments_query')
+const bcrypt = require('bcrypt')
 
 
 /* REDIRECTS '/posts' to '/'. */
@@ -76,7 +77,7 @@ router.get('/:id', (req, res, next) => {
         post: post,
         postEditAuthorized: postEditAuthorized,
         comments: comments,
-        userLoggedIn: req.user.user_name
+        userLoggedIn: userLoggedIn
       })
     })
     .catch((err) => {

@@ -30,10 +30,7 @@ router.get('/register', (req, res, next) => {
 
 /* Register a new user */
 router.post('/register', (req, res, next) => {
-  if (!req.body.username || !req.body.password || !req.body.email) {
-    res.render('error', {message:"Please fill in all fields"})
-    return
-  }
+
   userModel.count(req.body.username)
     .then((num) => {
       console.log('num is: ', num, 'num.count is: ', num[0].count)

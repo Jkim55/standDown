@@ -1,10 +1,10 @@
 'use strict'
+
 const bcrypt = require("bcrypt");
 const passport = require("passport")
 const Local = require("passport-local")
 
 const userModel = require('./model/users_query')
-
 
 passport.use(new Local((username, password, done) => {
   userModel.findUser(username)

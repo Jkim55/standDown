@@ -8,7 +8,9 @@ function addUser(userData){
 }
 
 function countOfUser(userName){
-  return knex('users').count('user_name').where('user_name', userName);
+  return knex('users')
+  .count('user_name')
+  .where('user_name', userName);
 }
 
 function findUser(userName){
